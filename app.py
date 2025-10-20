@@ -82,13 +82,13 @@ if uploaded_resume:
         top_jobs = match_resume_to_jobs(resume_text, top_k=10)
 
         for _, row in top_jobs.iterrows():
-            st.markdown(f"
-            🎯 Job Title: {row['title']}
-            🏢 Company: {row['Company']}
-           📊 Match Score: {round(row['match_score']*100, 2)}%
-            🧩 Required Skills: {row['skills']}
+            st.markdown(f"""
+            🎯 **Job Title:** {row['title']}
+            🏢 **Company:** {row['Company']}
+            📊 **Match Score:** {round(row['match_score']*100, 2)}%
+            🧩 **Required Skills:** {row['skills']}
             ---
-            ")
+            """)
 
 else:
     st.info("Please upload a resume to start screening.")
