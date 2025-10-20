@@ -83,10 +83,10 @@ if uploaded_resume:
 
         for _, row in top_jobs.iterrows():
             st.markdown(f"""
-            **🎯 Job Title:** {row['title']}
-            **🏢 Company:** {row['Company']}
-            **📊 Match Score:** {round(row['match_score']*100, 2)}%
-            **🧩 Required Skills:** {row['skills']}
+            🎯 Job Title: {row['title']}
+            🏢 Company: {row['Company']}
+           📊 Match Score: {round(row['match_score']*100, 2)}%
+            🧩 Required Skills: {row['skills']}
             ---
             """)
 
