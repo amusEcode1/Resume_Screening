@@ -1,9 +1,3 @@
-!pip install sentence-transformers -q
-
-!pip install pdfplumber python-docx -q
-
-!pip install streamlit -q
-
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -13,20 +7,17 @@ from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 import spacy
 
-from google.colab import drive
-drive.mount('/content/drive')
-
 # Load Model and Data
 @st.cache_resource
 def load_model():
-    return SentenceTransformer("/content/drive/MyDrive/Models/Resume_Screening/sentence_model")
+    return SentenceTransformer("sentence_model")
 
 @st.cache_data
 def load_data():
-    resume_df = pd.read_csv("/content/drive/MyDrive/Models/Resume_Screening/resume_data.csv")
-    job_df = pd.read_csv("/content/drive/MyDrive/Models/Resume_Screening/job_data.csv")
-    resume_embeddings = np.load("/content/drive/MyDrive/Models/Resume_Screening/resume_embeddings.npy")
-    job_embeddings = np.load("/content/drive/MyDrive/Models/Resume_Screening/job_embeddings.npy")
+    resume_df = pd.read_csv("resume_data.csv")
+    job_df = pd.read_csv("job_data.csv")
+    resume_embeddings = np.load("resume_embeddings.npy")
+    job_embeddings = np.load("job_embeddings.npy")
     return resume_df, job_df, resume_embeddings, job_embeddings
 
 model = load_model()
@@ -101,7 +92,3 @@ if uploaded_resume:
 
 else:
     st.info("Please upload a resume to start screening.")
-
-!jupyter nbconvert --to script "/content/drive/MyDrive/Colab Notebooks/Resume_Screening_app/app.ipynb"
-
-!mv "/content/drive/MyDrive/Colab Notebooks/Resume_Screening_app/app.txt" "/content/drive/MyDrive/Colab Notebooks/Text_Summarization_app/app.py"
