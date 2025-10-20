@@ -73,22 +73,22 @@ if uploaded_resume:
         experience = extract_experience(resume_text)
 
         st.subheader("🧠 Extracted Information")
-        st.write(f"**Detected Skills:** {', '.join(skills) if skills else 'No skills detected'}")
-        st.write("**Experience Mentions:**")
+        st.write(f"Detected Skills: {', '.join(skills) if skills else 'No skills detected'}")
+        st.write("Experience Mentions:")
         for sent in experience[:3]:
             st.write(f"- {sent}")
 
         st.subheader("🔍 Matching Results")
-        top_jobs = match_resume_to_jobs(resume_text, top_k=3)
+        top_jobs = match_resume_to_jobs(resume_text, top_k=10)
 
         for _, row in top_jobs.iterrows():
-            st.markdown(f"""
+            st.markdown(f"
             🎯 Job Title: {row['title']}
             🏢 Company: {row['Company']}
            📊 Match Score: {round(row['match_score']*100, 2)}%
             🧩 Required Skills: {row['skills']}
             ---
-            """)
+            ")
 
 else:
     st.info("Please upload a resume to start screening.")
