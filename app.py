@@ -72,8 +72,8 @@ if uploaded_resume and job_description.strip():
         skills = extract_skills(resume_text)
 
         # Compute similarity
-        resume_vec = model.encode(resume_text, convert_to_tensor=True)
-        job_vec = model.encode(job_description, convert_to_tensor=True)
+        resume_vec = model.encode(resume_text, convert_to_tensor=True, normalize_embeddings=True)
+        job_vec = model.encode(job_description, convert_to_tensor=True, normalize_embeddings=True)
         similarity = util.cos_sim(resume_vec, job_vec).item()
 
         # Get snippet
