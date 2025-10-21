@@ -10,7 +10,7 @@ import spacy
 # Load Model and Data
 @st.cache_resource
 def load_model():
-    return SentenceTransformer("paraphrase-MiniLM-L6-v2")
+    return SentenceTransformer("sentence_model")
 
 @st.cache_data
 def load_data():
