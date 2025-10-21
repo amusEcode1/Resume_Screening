@@ -10,7 +10,7 @@ import spacy
 # Load Model and Data
 @st.cache_resource
 def load_model():
-    return SentenceTransformer("all-MiniLM-L6-v2")
+    return SentenceTransformer("sentence_model")
 
 @st.cache_data
 def load_data():
@@ -70,8 +70,8 @@ if uploaded_resume and job_description.strip():
         skills = extract_skills(resume_text)
 
         # Compute similarity
-        resume_vec = model.encode([resume_text])
-        job_vec = model.encode([job_description])
+        resume_vec = model.encode([resume_text], normalize_embeddings=True)
+        job_vec = model.encode([job_description], normalize_embeddings=True)
         similarity = cosine_similarity(resume_vec, job_vec)[0][0]
 
         # Get snippet
