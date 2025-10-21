@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import docx
 import pdfplumber
-from sentence_transformers import SentenceTransformer
+from sentence_transformers import SentenceTransformer, util
 from sklearn.metrics.pairwise import cosine_similarity
 import spacy
 
@@ -49,10 +49,12 @@ def get_best_snippet(resume_text, job_text):
     resume_doc = [sent.text for sent in nlp(resume_text).sents if len(sent.text.strip()) > 30]
     if not resume_doc:
         return "No detailed content found in resume."
-    embeddings_resume = model.encode(resume_doc)
-    embedding_job = model.encode([job_text])
-    sims = cosine_similarity(embedding_job, embeddings_resume)[0]
-    best_index = np.argmax(sims)
+        
+    # Encode and compare similarities
+    resume_embedding = model.encode(resume_doc, convert_to_tensor=True)
+    job_embedding = model.encode(job_text, convert_to_tensor=True)
+    cosine_scores = util.cos_sim(job_embedding, resume_embedding)[0]
+    best_index = cosine_scores.argmax().item()
     return resume_doc[best_index]
 
 # Streamlit UI
@@ -70,9 +72,9 @@ if uploaded_resume and job_description.strip():
         skills = extract_skills(resume_text)
 
         # Compute similarity
-        resume_vec = model.encode([resume_text], normalize_embeddings=True)
-        job_vec = model.encode([job_description], normalize_embeddings=True)
-        similarity = cosine_similarity(resume_vec, job_vec)[0][0]
+        resume_vec = model.encode(resume_text, convert_to_tensor=True)
+        job_vec = model.encode(job_description, convert_to_tensor=True)
+        similarity = util.cos_sim(resume_vec, job_vec).item()
 
         # Get snippet
         snippet = get_best_snippet(resume_text, job_description)
