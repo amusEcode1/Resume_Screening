@@ -32,7 +32,7 @@ SKILLS = ["python", "java", "sql", "excel", "tableau", "power bi",
 def extract_resume_text(uploaded_file):
     if uploaded_file.type == "application/pdf":
         with pdfplumber.open(uploaded_file) as pdf:
-            text = "\n".join([page.extract_text() for page in pdf.pages])
+            text = "\n".join([page.extract_text() or '' for page in pdf.pages])
     elif uploaded_file.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
         doc = docx.Document(uploaded_file)
         text = "\n".join([para.text for para in doc.paragraphs])
@@ -80,7 +80,7 @@ if uploaded_resume and job_description.strip():
         # Display Results
         st.success("✅ Analysis Complete!")
         st.markdown(f"### 🔢 Match Score: **{round(similarity * 100, 2)}%**")
-        st.markdown(f"**🧠 Strong match for:** {' '.join(job_description.split()[:20])}...")
+        st.markdown(f"**🧠 Strong match for:** {' '.join(job_description.split()[:120])}...")
         st.markdown("**📌 Resume Snippet:**")
         st.info(snippet)
         st.markdown(f"**💼 Matched Skills:** {', '.join(skills) if skills else 'No skills detected'}")
