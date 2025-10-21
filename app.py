@@ -15,12 +15,12 @@ def load_model():
 def load_data():
     resume_df = pd.read_csv("resume_data.csv")
     job_df = pd.read_csv("job_data.csv")
-    resume_embeddings = np.load("resume_embeddings.npy")
-    job_embeddings = np.load("job_embeddings.npy")
+    resume_embedding = np.load("resume_embeddings.npy")
+    job_embedding = np.load("job_embeddings.npy")
     return resume_df, job_df, resume_embeddings, job_embeddings
 
 model = load_model()
-resume_df, job_df, resume_embeddings, job_embeddings = load_data()
+resume_df, job_df, resume_embedding, job_embedding = load_data()
 
 nlp = spacy.load("en_core_web_sm")
 
