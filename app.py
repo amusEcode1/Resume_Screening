@@ -17,7 +17,7 @@ def load_data():
     job_df = pd.read_csv("job_data.csv")
     resume_embedding = np.load("resume_embeddings.npy")
     job_embedding = np.load("job_embeddings.npy")
-    return resume_df, job_df, resume_embeddings, job_embeddings
+    return resume_df, job_df, resume_embedding, job_embedding
 
 model = load_model()
 resume_df, job_df, resume_embedding, job_embedding = load_data()
